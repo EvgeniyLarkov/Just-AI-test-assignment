@@ -1,0 +1,5 @@
+./node_modules
+./vscode
+./build
+.eslintrc.json
+webpack.config.js

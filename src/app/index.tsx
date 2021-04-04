@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route, Switch } from 'react-router';
-import { App as TodoApp } from 'app/containers/App';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { hot } from 'react-hot-loader';
+import DndApp from './containers/App';
 
-export const App = hot(module)(() => (
-  <Switch>
-    <Route path="/" component={TodoApp} />
-  </Switch>
+const App = hot(module)(() => (
+  <DndApp />
 ));
+
+export default App;

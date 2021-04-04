@@ -1,20 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createBrowserHistory } from 'history';
-import { configureStore } from 'app/store';
-import { Router } from 'react-router';
-import { App } from './app';
+import { CssBaseline } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import store from 'app/redux/store';
+import App from './app';
 
-// prepare store
-const history = createBrowserHistory();
-const store = configureStore();
+const theme = createMuiTheme({
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        html: {
+          marginLeft: 'calc(100vw - 100%)',
+        },
+      },
+    },
+  },
+});
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <App />
-    </Router>
+    </ThemeProvider>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

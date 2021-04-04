@@ -1,63 +1,42 @@
-import React from 'react';
-import style from './style.css';
-import { RouteComponentProps } from 'react-router';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTodoActions } from 'app/actions';
-import { RootState } from 'app/reducers';
-import { TodoModel } from 'app/models';
-import { Header, TodoList, Footer } from 'app/components';
+import { Typography } from '@material-ui/core';
+import { ProfilesSection, Search, SelectedSection } from 'app/components';
+import { RootState } from 'app/redux/ducks';
+import { ProfileStates } from 'app/redux/ducks/types';
+import { AppDispatch } from 'app/redux/store';
+import { getUsers } from 'app/redux/ducks/profiles';
+import { useStyles } from './styles';
 
-const FILTER_VALUES = (Object.keys(TodoModel.Filter) as (keyof typeof TodoModel.Filter)[]).map(
-  (key) => TodoModel.Filter[key]
-);
+const App: React.FC = () => {
+  const styles = useStyles();
+  const dispatch: AppDispatch = useDispatch();
+  const { state } = useSelector(({ profiles }: RootState) => profiles);
 
-const FILTER_FUNCTIONS: Record<TodoModel.Filter, (todo: TodoModel) => boolean> = {
-  [TodoModel.Filter.SHOW_ALL]: () => true,
-  [TodoModel.Filter.SHOW_ACTIVE]: (todo) => !todo.completed,
-  [TodoModel.Filter.SHOW_COMPLETED]: (todo) => todo.completed
-};
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
 
-export namespace App {
-  export interface Props extends RouteComponentProps<void> {}
-}
-
-export const App = ({ history, location }: App.Props) => {
-  const dispatch = useDispatch();
-  const todoActions = useTodoActions(dispatch);
-  const { todos, filter } = useSelector((state: RootState) => {
-    const hash = location?.hash?.replace('#', '');
-    return {
-      todos: state.todos,
-      filter: FILTER_VALUES.find((value) => value === hash) ?? TodoModel.Filter.SHOW_ALL
-    };
-  });
-
-  const handleClearCompleted = React.useCallback((): void => {
-    todoActions.clearCompleted();
-  }, [todoActions]);
-
-  const handleFilterChange = React.useCallback(
-    (filter: TodoModel.Filter): void => {
-      history.push(`#${filter}`);
-    },
-    [history]
-  );
-
-  const filteredTodos = React.useMemo(() => (filter ? todos.filter(FILTER_FUNCTIONS[filter]) : todos), [todos, filter]);
-  const activeCount = React.useMemo(() => todos.filter((todo) => !todo.completed).length, [todos]);
-  const completedCount = React.useMemo(() => todos.filter((todo) => todo.completed).length, [todos]);
+  const isFetched = state === ProfileStates.fetched;
 
   return (
-    <div className={style.normal}>
-      <Header addTodo={todoActions.addTodo} />
-      <TodoList todos={filteredTodos} actions={todoActions} />
-      <Footer
-        filter={filter}
-        activeCount={activeCount}
-        completedCount={completedCount}
-        onClickClearCompleted={handleClearCompleted}
-        onClickFilter={handleFilterChange}
-      />
-    </div>
+    <main className={styles.root}>
+      <div className={styles.wrapper}>
+        <section className={styles.content}>
+          <div className={styles.label}>
+            <Search />
+          </div>
+          {isFetched && <ProfilesSection />}
+        </section>
+        <section className={styles.content}>
+          <div className={styles.label}>
+            <Typography variant="h6">Избранные</Typography>
+          </div>
+          <SelectedSection />
+        </section>
+      </div>
+    </main>
   );
 };
+
+export default App;
