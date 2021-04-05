@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignContent: 'baseline',
     width: '100%',
+    backgroundColor: theme.palette.background.paper,
     borderRadius: 60,
     padding: theme.spacing(3),
     marginBottom: theme.spacing(2),
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     lineHeight: 1.6,
     letterSpacing: '0.00938em',
+  },
+  removeButton: {
+    marginLeft: 'auto',
   },
 }));
 

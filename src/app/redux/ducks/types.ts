@@ -16,6 +16,7 @@ export enum SearchStates {
 
 export interface SelectedInterface {
   state: SelectedStates
+  isDragging: boolean
   allIds: string[]
 }
 

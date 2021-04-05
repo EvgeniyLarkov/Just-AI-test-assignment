@@ -4,6 +4,12 @@ import {
   ProfilesInterface, ProfileStates, UserInterface, UsersApiResponse,
 } from './types';
 
+const transformDate = (date: string) => {
+  const [year, month, day] = date.slice(0, 10).split('-');
+  const result = [day, month, year].join('.');
+  return result;
+};
+
 export const getUsers = createAsyncThunk<
 UsersApiResponse,
 number | undefined,
@@ -45,7 +51,7 @@ const profilesSlice = createSlice({
           name: user.name.first,
           surname: user.name.last,
           regage: user.dob.age,
-          regdate: user.dob.date,
+          regdate: transformDate(user.dob.date),
           id: user.login.uuid,
           picture: user.picture.medium,
           email: user.email,

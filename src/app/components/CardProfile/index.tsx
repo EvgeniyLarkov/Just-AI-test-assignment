@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { DragEvent } from 'react';
 import CardBase, { CardBaseProps } from '../CardBase';
+import useStyles from './styles';
 
 export interface CardProfileProps extends CardBaseProps {
-  id: string;
+  dragStartHandler: (ev: DragEvent<HTMLElement>) => void,
+  dragEndHandler: (ev: DragEvent<HTMLElement>) => void
 }
 
 const CardProfile: React.FC<CardProfileProps> = (props: CardProfileProps) => {
   const {
-    children, email, avatar, regdate,
+    children, email, avatar, regdate, dragStartHandler, dragEndHandler,
   } = props;
+  const styles = useStyles();
+
   return (
-    <div draggable>
+    <div
+      onDragStart={dragStartHandler}
+      onDragEnd={dragEndHandler}
+      className={styles.root}
+      draggable
+    >
       <CardBase
         regdate={regdate}
         email={email}

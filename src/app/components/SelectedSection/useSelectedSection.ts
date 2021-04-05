@@ -1,23 +1,32 @@
-import { useMemo } from 'react';
+import { MouseEventHandler, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/redux/ducks';
 import { AppDispatch } from 'app/redux/store';
+import { add, remove } from 'app/redux/ducks/selected';
 import { SelectedStates, UserInterface } from 'app/redux/ducks/types';
-import { setSelected } from 'app/redux/ducks/selected';
 
 export interface UseSelectedSectionInterface {
   users: UserInterface[],
   isEmpty: boolean,
-  handleDataChange: (ids: string[]) => void,
+  isDragging: boolean,
+  handleInsert: (id: string | undefined) => void,
+  handleRemove: (id: string) => MouseEventHandler<HTMLButtonElement>,
 }
 
 const UseSelectedSection = (): UseSelectedSectionInterface => {
-  const { state, allIds } = useSelector(({ selected }: RootState) => selected);
+  const { state, allIds, isDragging } = useSelector(({ selected }: RootState) => selected);
   const { data } = useSelector(({ profiles }: RootState) => profiles);
   const dispatch: AppDispatch = useDispatch();
 
-  const handleDataChange = (ids: string[]) => {
-    dispatch(setSelected({ ids }));
+  const handleInsert = (id: string | undefined) => {
+    if (!id || allIds.includes(id)) {
+      return;
+    }
+    dispatch(add({ id, position: 0 }));
+  };
+
+  const handleRemove = (id: string) => () => {
+    dispatch(remove({ id, position: 0 }));
   };
 
   const isEmpty = state === SelectedStates.idle;
@@ -25,7 +34,7 @@ const UseSelectedSection = (): UseSelectedSectionInterface => {
   const users = useMemo(() => allIds.map((id) => data[id]), [allIds, data]);
 
   return {
-    users, isEmpty, handleDataChange,
+    users, isEmpty, handleInsert, isDragging, handleRemove,
   };
 };
 

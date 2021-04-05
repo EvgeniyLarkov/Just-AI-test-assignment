@@ -3,6 +3,7 @@ import { SelectedInterface, SelectedStates } from './types';
 
 const initialState: SelectedInterface = {
   state: SelectedStates.idle,
+  isDragging: false,
   allIds: [],
 };
 
@@ -10,10 +11,21 @@ const selectedSlice = createSlice({
   name: 'selected',
   initialState,
   reducers: {
-    set(state, action: PayloadAction<{ ids: string[] }>) {
-      const { ids } = action.payload;
-      state.allIds = ids;
+    add(state, action: PayloadAction<{ id: string, position: number }>) {
+      const { id, position } = action.payload;
+      state.allIds.splice(position, 0, id);
       state.state = SelectedStates.contain;
+    },
+    remove(state, action: PayloadAction<{ id: string, position: number }>) {
+      const { position } = action.payload;
+      state.allIds.splice(position, 1);
+      state.state = SelectedStates.contain;
+    },
+    dragStart(state) {
+      state.isDragging = true;
+    },
+    dragEnd(state) {
+      state.isDragging = false;
     },
     clear() {
       return initialState;
@@ -21,6 +33,8 @@ const selectedSlice = createSlice({
   },
 });
 
-export const { set: setSelected, clear: clearSelected } = selectedSlice.actions;
+export const {
+  add, remove, clear: clearSelected, dragStart, dragEnd,
+} = selectedSlice.actions;
 
 export default selectedSlice.reducer;

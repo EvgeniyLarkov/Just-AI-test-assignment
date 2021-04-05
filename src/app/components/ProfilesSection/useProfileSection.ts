@@ -1,14 +1,18 @@
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/redux/ducks';
 import { SearchStates, UserInterface } from 'app/redux/ducks/types';
+import { AppDispatch } from 'app/redux/store';
+import { dragEnd, dragStart } from 'app/redux/ducks/selected';
 
 export interface UseProfileSectionInterface {
   users: { [x: string]: UserInterface[] }
   isSearching: boolean
   searchValue: string
+  onDragStart: () => void
+  onDragEnd: () => void
 }
-const getCategoryName = (age: number) => {
+const getCategoryName = (age: number): string => {
   const lowerMatch = Math.floor((age - 1) / 10) * 10;
   return `${lowerMatch + 1}-${lowerMatch + 10}`;
 };
@@ -19,9 +23,18 @@ const useProfileSection = (): UseProfileSectionInterface => {
     allIds: profileIds,
   } = useSelector(({ profiles }: RootState) => profiles);
 
+  const dispatch: AppDispatch = useDispatch();
   const { state, match } = useSelector(({ search }: RootState) => search);
 
   const isSearching = state === SearchStates.contain;
+
+  const onDragStart = useCallback(() => {
+    dispatch(dragStart());
+  }, [dispatch]);
+
+  const onDragEnd = useCallback(() => {
+    dispatch(dragEnd());
+  }, [dispatch]);
 
   const start = new Date();
 
@@ -39,7 +52,7 @@ const useProfileSection = (): UseProfileSectionInterface => {
       users[computedName].push(user);
     }
 
-    Object.keys(users).forEach((key) => users[key].sort());
+    Object.keys(users).forEach((key) => users[key].sort((a, b) => b.regage - a.regage));
 
     return users;
   }, [data, profileIds]);
@@ -60,6 +73,8 @@ const useProfileSection = (): UseProfileSectionInterface => {
     users: isSearching ? filteredUsers : sortedUsers,
     isSearching,
     searchValue: match,
+    onDragStart,
+    onDragEnd,
   };
 };
 

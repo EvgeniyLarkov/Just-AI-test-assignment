@@ -2,20 +2,26 @@ import React from 'react';
 import SelectedSectionView from './SelectedSectionView';
 import useStyles from './styles';
 import UseSelectedSection from './useSelectedSection';
-import { useDragDropHandler, useDragOverHandler } from '../../hooks/useDrag';
+import { useDragDropHandler, useDragOverHandler, useDragEnterHandler } from '../../hooks/useDrag';
 
 const ProfilesSection: React.FC = () => {
-  const { users } = UseSelectedSection();
-  const styles = useStyles();
+  const {
+    users, handleInsert, isDragging, handleRemove,
+  } = UseSelectedSection();
+  const styles = useStyles({ isDragging });
+
+  const handleDrop = useDragDropHandler(handleInsert);
+  const handleEnter = useDragEnterHandler();
   const handleOver = useDragOverHandler();
-  const handleDrop = useDragDropHandler(console.log);
 
   return (
     <SelectedSectionView
       users={users}
       styles={styles}
       handleOver={handleOver}
+      handleEnter={handleEnter}
       handleDrop={handleDrop}
+      handleRemove={handleRemove}
     />
   );
 };
