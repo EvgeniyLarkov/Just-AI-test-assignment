@@ -3,16 +3,28 @@ import ProfileCard, { ProfileCardProps } from '../ProfileCard';
 import useStyles from './styles';
 
 export interface CardWithLayoutProps extends ProfileCardProps {
-  handleOver: (ev: DragEvent<HTMLElement>) => void,
-  handleDrop: (ev: DragEvent<HTMLElement>) => void,
+  isDragging?: boolean,
+  handleOver?: (ev: DragEvent<HTMLElement>) => void,
+  handleDrop?: (ev: DragEvent<HTMLElement>) => void,
+  handleDragStart?: (ev: DragEvent<HTMLElement>) => void,
+  handleDragEnd?: (ev: DragEvent<HTMLElement>) => void,
   handleRemove?: MouseEventHandler<HTMLButtonElement>
 }
 
 const CardWithLayout: React.FC<CardWithLayoutProps> = (props: CardWithLayoutProps) => {
   const {
-    email, regdate, avatar, children, handleRemove, handleOver, handleDrop,
+    email,
+    regdate,
+    avatar,
+    children,
+    isDragging,
+    handleRemove,
+    handleOver,
+    handleDrop,
+    handleDragStart,
+    handleDragEnd,
   } = props;
-  const styles = useStyles();
+  const styles = useStyles({ isDragging });
   return (
     <div className={styles.root}>
       <div
@@ -25,6 +37,8 @@ const CardWithLayout: React.FC<CardWithLayoutProps> = (props: CardWithLayoutProp
         email={email}
         avatar={avatar}
         handleRemove={handleRemove}
+        handleDragStart={handleDragStart}
+        handleDragEnd={handleDragEnd}
       >
         {children}
       </ProfileCard>

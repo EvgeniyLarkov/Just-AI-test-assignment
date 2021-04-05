@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: props.isDragging ? 'orange' : 'inherit',
     boxShadow: props.isDragging ? theme.shadows[3] : 'inherit',
     transition: `all 0.3s ${theme.transitions.easing.easeIn}`,
+    zIndex: 0,
   }),
 }));
 

@@ -1,18 +1,15 @@
 import { makeStyles } from '@material-ui/core';
 
-export interface ProfileCardStylesProps {
-  src: string,
-}
-
 const useStyles = makeStyles({
   root: ({
     position: 'relative',
   }),
-  continer: ({
+  continer: (props: { isDragging?: boolean }) => ({
     position: 'absolute',
     top: '-63px',
     height: '124px',
     width: '100%',
+    zIndex: props.isDragging ? 1000 : 1,
   }),
 });
 

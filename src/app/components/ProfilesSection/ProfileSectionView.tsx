@@ -19,8 +19,8 @@ export interface ProfileSectionViewProps {
   users: Record<string, UserInterface[]>
   isSearching: boolean
   searchValue: string,
-  dragStartHandler: typeof useDragStartHandler,
-  dragEndHandler: typeof useDragEndHandler,
+  handleDragStart: typeof useDragStartHandler,
+  handleDragEnd: typeof useDragEndHandler,
   onDragStart: () => void,
   onDragEnd: () => void,
 }
@@ -34,7 +34,7 @@ const getHighlightedText = (text: string, highlight: string): { __html: string }
 };
 
 const ProfileSectionView: React.FC<ProfileSectionViewProps> = ({
-  users, searchValue, isSearching, dragStartHandler, onDragStart, dragEndHandler, onDragEnd,
+  users, searchValue, isSearching, handleDragStart, onDragStart, handleDragEnd, onDragEnd,
 }: ProfileSectionViewProps) => (
   <div>
     {Object.keys(users).sort().map((cat) => (
@@ -56,8 +56,8 @@ const ProfileSectionView: React.FC<ProfileSectionViewProps> = ({
               email={user.email}
               avatar={user.picture}
               key={user.id}
-              dragStartHandler={dragStartHandler(user.id, onDragStart)}
-              dragEndHandler={dragEndHandler(onDragEnd)}
+              handleDragStart={handleDragStart(user.id, onDragStart)}
+              handleDragEnd={handleDragEnd(onDragEnd)}
             >
               {isSearching
                 ? <span dangerouslySetInnerHTML={getHighlightedText(`${user.name} ${user.surname}`, searchValue)} /> // Для производительности

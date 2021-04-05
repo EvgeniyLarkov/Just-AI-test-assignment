@@ -2,15 +2,20 @@ import { MouseEventHandler, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/redux/ducks';
 import { AppDispatch } from 'app/redux/store';
-import { add, remove } from 'app/redux/ducks/selected';
+import {
+  add, dragEnd, dragStart, move, remove,
+} from 'app/redux/ducks/selected';
 import { SelectedStates, UserInterface } from 'app/redux/ducks/types';
 
 export interface UseSelectedSectionInterface {
   users: UserInterface[],
   isEmpty: boolean,
   isDragging: boolean,
+  onDragStart: () => void,
+  onDragEnd: () => void,
   handleInsert: (pos?: number) => (id: string | undefined) => void,
   handleRemove: (id: string) => MouseEventHandler<HTMLButtonElement>,
+  handleMove: (pos: number) => (id: string) => void,
 }
 
 const UseSelectedSection = (): UseSelectedSectionInterface => {
@@ -31,12 +36,24 @@ const UseSelectedSection = (): UseSelectedSectionInterface => {
     dispatch(remove({ id }));
   };
 
+  const handleMove = (position: number) => (id: string) => {
+    dispatch(move({ id, position }));
+  };
+
+  const onDragStart = () => {
+    dispatch(dragStart());
+  };
+
+  const onDragEnd = () => {
+    dispatch(dragEnd());
+  };
+
   const isEmpty = state === SelectedStates.idle;
 
   const users = useMemo(() => allIds.map((id) => data[id]), [allIds, data]);
 
   return {
-    users, isEmpty, handleInsert, isDragging, handleRemove,
+    users, isEmpty, isDragging, handleInsert, handleRemove, handleMove, onDragStart, onDragEnd,
   };
 };
 

@@ -16,8 +16,8 @@ const ProfilesSection: React.FC = () => {
       users={users}
       isSearching={isSearching}
       searchValue={searchValue}
-      dragStartHandler={handleDragStart}
-      dragEndHandler={handleDragEnd}
+      handleDragStart={handleDragStart}
+      handleDragEnd={handleDragEnd}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
     />

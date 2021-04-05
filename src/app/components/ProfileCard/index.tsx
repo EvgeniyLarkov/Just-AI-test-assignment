@@ -4,20 +4,20 @@ import useStyles from './styles';
 
 export interface ProfileCardProps extends CardBaseProps {
   handleRemove?: MouseEventHandler<HTMLButtonElement>
-  dragStartHandler?: (ev: DragEvent<HTMLElement>) => void,
-  dragEndHandler?: (ev: DragEvent<HTMLElement>) => void
+  handleDragStart?: (ev: DragEvent<HTMLElement>) => void,
+  handleDragEnd?: (ev: DragEvent<HTMLElement>) => void
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = (props: ProfileCardProps) => {
   const {
-    children, email, avatar, regdate, dragStartHandler, dragEndHandler, handleRemove,
+    children, email, avatar, regdate, handleDragStart, handleDragEnd, handleRemove,
   } = props;
   const styles = useStyles();
 
   return (
     <div
-      onDragStart={dragStartHandler}
-      onDragEnd={dragEndHandler}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
       className={styles.root}
       draggable
     >

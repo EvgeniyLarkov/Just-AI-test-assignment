@@ -2,14 +2,13 @@
 import { DragEvent, useRef } from 'react';
 
 export const useDragStartHandler = (
-  id: string,
+  data: string,
   cb?: (...args: any[]) => any,
   format?: string,
   effect?: 'copy' | 'move' | 'link' | 'none',
 ) => (ev: DragEvent<HTMLElement>):void => {
-  ev.dataTransfer.setData(format ?? 'text/plain', id);
+  ev.dataTransfer.setData(format ?? 'text/plain', data);
   ev.dataTransfer.dropEffect = effect ?? 'copy';
-
   if (cb !== undefined) {
     cb();
   }
@@ -17,10 +16,13 @@ export const useDragStartHandler = (
 
 export const useDragEndHandler = (
   cb?: (...args: any[]) => any,
+  format?: string,
 ) => (ev: DragEvent<HTMLElement>):void => {
+  console.log('end of drag');
+  const data = ev.dataTransfer.getData(format ?? 'text/plain');
   ev.preventDefault();
   if (cb !== undefined) {
-    cb();
+    cb(data);
   }
 };
 
