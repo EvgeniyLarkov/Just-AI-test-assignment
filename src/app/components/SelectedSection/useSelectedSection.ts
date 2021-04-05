@@ -9,24 +9,26 @@ export interface UseSelectedSectionInterface {
   users: UserInterface[],
   isEmpty: boolean,
   isDragging: boolean,
-  handleInsert: (id: string | undefined) => void,
+  handleInsert: (pos?: number) => (id: string | undefined) => void,
   handleRemove: (id: string) => MouseEventHandler<HTMLButtonElement>,
 }
 
 const UseSelectedSection = (): UseSelectedSectionInterface => {
   const { state, allIds, isDragging } = useSelector(({ selected }: RootState) => selected);
   const { data } = useSelector(({ profiles }: RootState) => profiles);
+
   const dispatch: AppDispatch = useDispatch();
 
-  const handleInsert = (id: string | undefined) => {
+  const handleInsert = (position?: number) => (id: string | undefined) => {
     if (!id || allIds.includes(id)) {
       return;
     }
-    dispatch(add({ id, position: 0 }));
+
+    dispatch(add({ id, position }));
   };
 
   const handleRemove = (id: string) => () => {
-    dispatch(remove({ id, position: 0 }));
+    dispatch(remove({ id }));
   };
 
   const isEmpty = state === SelectedStates.idle;

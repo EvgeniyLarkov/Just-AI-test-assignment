@@ -65,4 +65,5 @@ export const useDragDropHandler = (
   }
 
   ev.preventDefault();
+  ev.stopPropagation();
 };

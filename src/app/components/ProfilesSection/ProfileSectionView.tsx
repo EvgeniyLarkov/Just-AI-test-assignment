@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { useDragEndHandler, useDragStartHandler } from 'app/hooks/useDrag';
 import { UserInterface } from '../../redux/ducks/types';
-import CardProfile from '../CardProfile';
+import ProfileCard from '../ProfileCard';
 import { Accordion, AccordionSummary } from './styles';
 
 /* const onRenderCallback = (
@@ -51,7 +51,7 @@ const ProfileSectionView: React.FC<ProfileSectionViewProps> = ({
         </AccordionSummary>
         {users[cat as keyof typeof users].map(
           (user) => (
-            <CardProfile
+            <ProfileCard
               regdate={user.regdate}
               email={user.email}
               avatar={user.picture}
@@ -62,7 +62,7 @@ const ProfileSectionView: React.FC<ProfileSectionViewProps> = ({
               {isSearching
                 ? <span dangerouslySetInnerHTML={getHighlightedText(`${user.name} ${user.surname}`, searchValue)} /> // Для производительности
                 : `${user.name} ${user.surname}`}
-            </CardProfile>
+            </ProfileCard>
           ),
         )}
       </Accordion>

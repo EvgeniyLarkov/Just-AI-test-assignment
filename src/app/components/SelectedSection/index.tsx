@@ -2,7 +2,7 @@ import React from 'react';
 import SelectedSectionView from './SelectedSectionView';
 import useStyles from './styles';
 import UseSelectedSection from './useSelectedSection';
-import { useDragDropHandler, useDragOverHandler, useDragEnterHandler } from '../../hooks/useDrag';
+import { useDragOverHandler, useDragEnterHandler, useDragDropHandler } from '../../hooks/useDrag';
 
 const ProfilesSection: React.FC = () => {
   const {
@@ -10,8 +10,8 @@ const ProfilesSection: React.FC = () => {
   } = UseSelectedSection();
   const styles = useStyles({ isDragging });
 
-  const handleDrop = useDragDropHandler(handleInsert);
   const handleEnter = useDragEnterHandler();
+  const handleDrop = useDragDropHandler;
   const handleOver = useDragOverHandler();
 
   return (
@@ -21,6 +21,7 @@ const ProfilesSection: React.FC = () => {
       handleOver={handleOver}
       handleEnter={handleEnter}
       handleDrop={handleDrop}
+      handleInsert={handleInsert}
       handleRemove={handleRemove}
     />
   );
