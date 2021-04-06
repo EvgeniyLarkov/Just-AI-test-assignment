@@ -5,19 +5,21 @@ import useStyles from './styles';
 
 export interface SearchViewProps {
   value: string;
+  numberOfUsers: number;
   setValue: (ev: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const SearchView: React.FC<SearchViewProps> = ({
   value,
   setValue,
+  numberOfUsers,
 }: SearchViewProps) => {
   const styles = useStyles();
   return (
     <div className={styles.root}>
       <SearchIcon />
       <InputBase
-        placeholder="Поиск"
+        placeholder={`Поиск по ${numberOfUsers} юзерам`}
         value={value}
         onChange={setValue}
         className={styles.input}

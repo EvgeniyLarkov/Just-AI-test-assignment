@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getUsers } from './profiles';
 import { SelectedInterface, SelectedStates } from './types';
 
 const initialState: SelectedInterface = {
@@ -11,17 +12,16 @@ const selectedSlice = createSlice({
   name: 'selected',
   initialState,
   reducers: {
-    add(state, action: PayloadAction<{ id: string, position: number }>) {
-      const { id, position } = action.payload;
+    insertBefore(state, action: PayloadAction<{ source: string, target?: string }>) {
+      const { source, target } = action.payload;
 
-      state.allIds.splice(position, 0, id);
-
-      state.state = SelectedStates.contain;
-    },
-    move(state, action: PayloadAction<{ id: string, position: number }>) {
-      const { id, position } = action.payload;
-      const newIds = state.allIds.map((key) => (key === id ? null : key));
-      newIds.splice(position, 0, id);
+      const newIds = state.allIds.map((key) => (key === source ? null : key));
+      if (target === undefined) {
+        newIds.splice(state.allIds.length, 0, source);
+      } else {
+        const newPosition = state.allIds.indexOf(target);
+        newIds.splice(newPosition, 0, source);
+      }
 
       state.allIds = newIds.filter((key) => key !== null) as string[];
     },
@@ -44,10 +44,13 @@ const selectedSlice = createSlice({
       return initialState;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getUsers.pending, () => initialState);
+  },
 });
 
 export const {
-  add, remove, move, clear: clearSelected, dragStart, dragEnd,
+  remove, clear: clearSelected, dragStart, dragEnd, insertBefore,
 } = selectedSlice.actions;
 
 export default selectedSlice.reducer;

@@ -8,7 +8,7 @@ interface UseStylesProps {
 const useStyles = makeStyles((theme) => ({
   root: (props: UseStylesProps) => ({
     position: 'relative',
-    transition: `all 0.3s ${theme.transitions.easing.easeIn}`,
+    transition: `all 0.1s ${theme.transitions.easing.easeIn}`,
     paddingTop: (props.isOver && props.isDragging) ? '20px' : '0',
   }),
   continer: (props: UseStylesProps) => ({

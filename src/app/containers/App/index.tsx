@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress, Typography } from '@material-ui/core';
+import Settings from 'app/components/Settings';
 import { ProfilesSection, Search, SelectedSection } from 'app/components';
 import { RootState } from 'app/redux/ducks';
 import { ProfileStates } from 'app/redux/ducks/types';
@@ -10,12 +11,15 @@ import { useStyles } from './styles';
 
 const App: React.FC = () => {
   const styles = useStyles();
+
   const dispatch: AppDispatch = useDispatch();
+
+  const { numberOfUsers } = useSelector(({ settings }: RootState) => settings);
   const { state } = useSelector(({ profiles }: RootState) => profiles);
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, []);
+    dispatch(getUsers(numberOfUsers));
+  }, [dispatch, numberOfUsers]);
 
   const isFetched = state === ProfileStates.fetched;
 
@@ -34,6 +38,9 @@ const App: React.FC = () => {
           <div className={styles.inner}>
             <div className={styles.label}>
               <Typography variant="h6">Избранные</Typography>
+              <div className={styles.settings}>
+                <Settings />
+              </div>
             </div>
             <SelectedSection />
           </div>

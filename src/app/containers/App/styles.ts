@@ -51,7 +51,6 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 80,
-    zIndex: 100,
   },
 
   progress: {
@@ -64,5 +63,10 @@ export const useStyles = makeStyles((theme) => ({
   sticky: {
     position: 'sticky',
     top: 0,
+  },
+
+  settings: {
+    position: 'absolute',
+    right: 0,
   },
 }));

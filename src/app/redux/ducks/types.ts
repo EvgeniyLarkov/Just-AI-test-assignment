@@ -20,6 +20,10 @@ export interface SelectedInterface {
   allIds: string[]
 }
 
+export interface SettingsInterface {
+  numberOfUsers: number,
+}
+
 export interface SearchInterface {
   state: SearchStates
   match: string

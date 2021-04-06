@@ -39,7 +39,6 @@ const profilesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, { payload: { results } }) => {
-      const start = performance.now();
       for (let i = 0; i < results.length; i += 1) {
         const user = results[i];
 
@@ -56,11 +55,11 @@ const profilesSlice = createSlice({
         state.allIds.push(user.login.uuid);
       }
 
-      console.log(`Redux: ${performance.now() - start}`);
-
       state.state = ProfileStates.fetched;
     });
     builder.addCase(getUsers.pending, (state) => {
+      state.allIds = [];
+      state.data = {};
       state.state = ProfileStates.fetching;
     });
     builder.addCase(getUsers.rejected, (state) => {

@@ -1,25 +1,36 @@
 {
-  "name": "react-hooks-redux-typescript-boilerplate",
-  "version": "1.1.1",
+  "name": "just-ai-test-assignment",
+  "version": "1.0.0",
   "private": true,
-  "description": "A frontend boilerplate with React hooks, Redux and Typescript",
-  "homepage": "https://rokoroku.github.io/react-redux-typescript-boilerplate",
+  "description": "Simple app using TS/React/Redux",
+  "homepage": "https://github.com/EvgeniyLarkov/Just-AI-test-assignment",
   "keywords": [
     "react",
     "hooks",
     "redux",
-    "typescript",
-    "todomvc"
+    "typescript"
   ],
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development --hot --progress --color --port 3000 --open",
-    "startprod": "webpack-dev-server --mode production --progress --color --port 3000 --open",
     "build": "webpack -p --progress --colors",
     "lint": "npx eslint ."
   },
   "license": "MIT",
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@reduxjs/toolkit": "^1.5.1",
+    "@types/react-transition-group": "^4.4.1",
+    "axios": "^0.21.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-redux": "^7.2.3",
+    "react-transition-group": "^4.4.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.13.14",
     "@types/classnames": "^2.2.11",
@@ -63,18 +74,5 @@
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.2"
-  },
-  "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.2",
-    "@reduxjs/toolkit": "^1.5.1",
-    "@types/react-transition-group": "^4.4.1",
-    "axios": "^0.21.1",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "react-redux": "^7.2.3",
-    "react-transition-group": "^4.4.1",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
   }
 }

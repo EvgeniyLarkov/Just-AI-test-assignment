@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { getStringFromDate } from 'app/utils/dateHelper';
-import { useDragEndHandler, useDragStartHandler } from 'app/utils/hooks/useDrag';
+import { dragEndHandler, dragStartHandler } from 'app/utils/hooks/useDrag';
 import { UserInterface } from '../../redux/ducks/types';
 import ProfileCard from '../ProfileCard';
 import { Accordion, AccordionSummary, useStyles } from './styles';
@@ -12,8 +12,8 @@ export interface ProfileSectionViewProps {
   styles: ReturnType<typeof useStyles>,
   isSearching: boolean,
   searchValue: string,
-  handleDragStart: typeof useDragStartHandler,
-  handleDragEnd: typeof useDragEndHandler,
+  handleDragStart: typeof dragStartHandler,
+  handleDragEnd: typeof dragEndHandler,
   onDragStart: () => void,
   onDragEnd: () => void,
 }

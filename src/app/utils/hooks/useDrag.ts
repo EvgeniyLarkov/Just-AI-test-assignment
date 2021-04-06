@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DragEvent, useRef } from 'react';
+import { DragEvent } from 'react';
 
-export const useDragStartHandler = (
+export const dragStartHandler = (
   data: string,
   cb?: (...args: any[]) => any,
   format?: string,
@@ -14,7 +14,7 @@ export const useDragStartHandler = (
   }
 };
 
-export const useDragEndHandler = (
+export const dragEndHandler = (
   cb?: (...args: any[]) => any,
   format?: string,
 ) => (ev: DragEvent<HTMLElement>):void => {
@@ -25,7 +25,7 @@ export const useDragEndHandler = (
   }
 };
 
-export const useDragEnterHandler = (
+export const dragEnterHandler = (
   cb?: (...args: any[]) => any,
 ) => (ev: DragEvent<HTMLElement>):void => {
   ev.preventDefault();
@@ -34,17 +34,17 @@ export const useDragEnterHandler = (
   }
 };
 
-export const useDragOverHandler = (
+export const dragOverHandler = (
   cb?: (...args: any[]) => any,
   delay = 100,
 ) => {
-  const timerRef = useRef<number>();
+  let timerRef = Date.now();
   return (ev: DragEvent<HTMLElement>):void => {
-    if (timerRef.current === undefined) {
-      timerRef.current = Date.now();
+    if (timerRef === undefined) {
+      timerRef = Date.now();
     }
-    if (Date.now() - timerRef.current > delay) {
-      timerRef.current = Date.now();
+    if (Date.now() - timerRef > delay) {
+      timerRef = Date.now();
       if (cb !== undefined) {
         cb();
       }
@@ -55,7 +55,7 @@ export const useDragOverHandler = (
   };
 };
 
-export const useDragDropHandler = (
+export const dragDropHandler = (
   cb?: (data: string) => any,
   format?: string,
 ) => (ev: DragEvent<HTMLElement>):void => {
