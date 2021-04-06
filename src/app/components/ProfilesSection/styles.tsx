@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 
@@ -32,3 +32,15 @@ export const AccordionSummary = withStyles({
   },
   expanded: {},
 })(MuiAccordionSummary);
+
+export const useStyles = makeStyles({
+  root: {
+    backgroundColor: '#e2e1e0',
+    '&:first-child': {
+      paddingTop: '16px',
+    },
+    '&:last-child': {
+      paddingBottom: '16px',
+    },
+  },
+});

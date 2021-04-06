@@ -11,13 +11,10 @@ const selectedSlice = createSlice({
   name: 'selected',
   initialState,
   reducers: {
-    add(state, action: PayloadAction<{ id: string, position?: number }>) {
+    add(state, action: PayloadAction<{ id: string, position: number }>) {
       const { id, position } = action.payload;
-      if (position === undefined) {
-        state.allIds.splice(state.allIds.length, 0, id);
-      } else {
-        state.allIds.splice(position, 0, id);
-      }
+
+      state.allIds.splice(position, 0, id);
 
       state.state = SelectedStates.contain;
     },

@@ -4,6 +4,7 @@ import { RootState } from 'app/redux/ducks';
 import { SearchStates, UserInterface } from 'app/redux/ducks/types';
 import { AppDispatch } from 'app/redux/store';
 import { dragEnd, dragStart } from 'app/redux/ducks/selected';
+import { compareDate } from 'app/utils/dateHelper';
 
 export interface UseProfileSectionInterface {
   users: { [x: string]: UserInterface[] }
@@ -36,8 +37,6 @@ const useProfileSection = (): UseProfileSectionInterface => {
     dispatch(dragEnd());
   }, [dispatch]);
 
-  const start = new Date();
-
   const sortedUsers = useMemo(() => {
     const users = {} as { [x: string]: UserInterface[] };
 
@@ -52,12 +51,11 @@ const useProfileSection = (): UseProfileSectionInterface => {
       users[computedName].push(user);
     }
 
-    Object.keys(users).forEach((key) => users[key].sort((a, b) => b.regage - a.regage));
+    Object.keys(users).forEach((key) => users[key]
+      .sort((a, b) => compareDate(b.regdate, a.regdate)));
 
     return users;
   }, [data, profileIds]);
-
-  console.log(`computing: ${Date.now() - start.valueOf()}`);
 
   const filteredUsers = useMemo(() => {
     const keys = Object.keys(sortedUsers);

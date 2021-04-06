@@ -5,15 +5,41 @@ const svg = "data:image/svg+xml,%3Csvg width='400' height='200' xmlns='http://ww
 const useStyles = makeStyles((theme) => ({
   root: (props: { isDragging: boolean }) => ({
     width: '100%',
-    height: '100%',
+    minHeight: '80vh',
     backgroundImage: `url("${svg}")`,
     backgroundRepeat: 'no-repeat',
+    paddingBottom: '200px',
     backgroundSize: '100%',
+    borderRadius: '8px',
     backgroundColor: props.isDragging ? 'orange' : 'inherit',
     boxShadow: props.isDragging ? theme.shadows[3] : 'inherit',
     transition: `all 0.3s ${theme.transitions.easing.easeIn}`,
     zIndex: 0,
   }),
+  inner: {
+    padding: '8px',
+  },
+  enter: {
+    maxHeight: 0,
+    opacity: 0,
+    transform: 'translateY(-100px)',
+  },
+  enterActive: {
+    opacity: 1,
+    maxHeight: '120px',
+    transform: 'translateY(0)',
+    transition: `all 300ms ${theme.transitions.easing.easeInOut}`,
+  },
+  exit: {
+    opacity: 1,
+    height: 0,
+    transform: 'translateY(0)',
+    transition: `all 1000ms ${theme.transitions.easing.easeInOut}`,
+  },
+  exitActive: {
+    opacity: 0,
+    transform: 'translateY(-100px)',
+  },
 }));
 
 export default useStyles;

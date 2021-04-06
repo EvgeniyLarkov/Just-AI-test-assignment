@@ -1,0 +1,52 @@
+.root {
+    position: relative;
+    user-select: none;
+    cursor: move;
+    z-index: 10;
+}
+
+.root:active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.profile {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 60px;
+    padding: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.profile_avatar {
+    -webkit-user-drag: none;
+    user-select: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    background-size: contain;
+}
+
+.profile_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 16px;
+}
+
+.text_base {
+    font-size: 1rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.00938em;
+}
+
+.button_remove {
+    margin-left: auto;
+}

@@ -18,7 +18,6 @@ export const useDragEndHandler = (
   cb?: (...args: any[]) => any,
   format?: string,
 ) => (ev: DragEvent<HTMLElement>):void => {
-  console.log('end of drag');
   const data = ev.dataTransfer.getData(format ?? 'text/plain');
   ev.preventDefault();
   if (cb !== undefined) {

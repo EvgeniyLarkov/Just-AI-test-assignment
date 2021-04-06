@@ -1,14 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getDateObj } from 'app/utils/dateHelper';
 import axios from 'axios';
 import {
   ProfilesInterface, ProfileStates, UserInterface, UsersApiResponse,
 } from './types';
-
-const transformDate = (date: string) => {
-  const [year, month, day] = date.slice(0, 10).split('-');
-  const result = [day, month, year].join('.');
-  return result;
-};
 
 export const getUsers = createAsyncThunk<
 UsersApiResponse,
@@ -25,7 +20,7 @@ number | undefined,
       return users.data;
     } catch (err) {
       return rejectWithValue({
-        message: 'Message',
+        message: 'Unable to connect',
       });
     }
   },
@@ -44,6 +39,7 @@ const profilesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, { payload: { results } }) => {
+      const start = performance.now();
       for (let i = 0; i < results.length; i += 1) {
         const user = results[i];
 
@@ -51,7 +47,7 @@ const profilesSlice = createSlice({
           name: user.name.first,
           surname: user.name.last,
           regage: user.dob.age,
-          regdate: transformDate(user.dob.date),
+          regdate: getDateObj(user.dob.date),
           id: user.login.uuid,
           picture: user.picture.medium,
           email: user.email,
@@ -59,6 +55,8 @@ const profilesSlice = createSlice({
 
         state.allIds.push(user.login.uuid);
       }
+
+      console.log(`Redux: ${performance.now() - start}`);
 
       state.state = ProfileStates.fetched;
     });

@@ -11,7 +11,12 @@ const theme = createMuiTheme({
     MuiCssBaseline: {
       '@global': {
         html: {
-          marginLeft: 'calc(100vw - 100%)',
+          overflowX: 'hidden',
+          marginRight: 'calc(100% - 100vw)',
+          backgroundColor: '#e2e1e0',
+        },
+        body: {
+          backgroundColor: 'inherit',
         },
       },
     },

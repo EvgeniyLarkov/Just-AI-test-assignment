@@ -31,10 +31,16 @@ export interface ProfilesInterface<T> {
   data: { [x: string]: T }
 }
 
+export interface CustomDate {
+  year: string,
+  month: string,
+  day: string
+}
+
 export interface UserInterface {
   name: string
   surname: string
-  regdate: string
+  regdate: CustomDate
   regage: number
   email: string
   id: string

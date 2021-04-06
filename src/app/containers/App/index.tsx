@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography } from '@material-ui/core';
+import { CircularProgress, Typography } from '@material-ui/core';
 import { ProfilesSection, Search, SelectedSection } from 'app/components';
 import { RootState } from 'app/redux/ducks';
 import { ProfileStates } from 'app/redux/ducks/types';
@@ -22,17 +22,21 @@ const App: React.FC = () => {
   return (
     <main className={styles.root}>
       <div className={styles.wrapper}>
-        <section className={styles.content}>
-          <div className={styles.label}>
+        <section className={styles.contentRelative}>
+          <div className={`${styles.label} ${styles.sticky}`}>
             <Search />
           </div>
-          {isFetched && <ProfilesSection />}
+          {isFetched
+            ? <ProfilesSection />
+            : <div className={styles.progress}><CircularProgress /></div>}
         </section>
-        <section className={styles.content}>
-          <div className={styles.label}>
-            <Typography variant="h6">Избранные</Typography>
+        <section className={`${styles.contentFixed}`}>
+          <div className={styles.inner}>
+            <div className={styles.label}>
+              <Typography variant="h6">Избранные</Typography>
+            </div>
+            <SelectedSection />
           </div>
-          <SelectedSection />
         </section>
       </div>
     </main>
