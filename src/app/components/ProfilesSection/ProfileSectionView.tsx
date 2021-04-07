@@ -32,7 +32,7 @@ const ProfileSectionView: React.FC<ProfileSectionViewProps> = ({
   <div>
     {Object.keys(users).sort().map((cat) => (
       <Accordion
-        key={`${cat}`}
+        key={cat}
         TransitionProps={transionProps}
         disabled={users[cat].length === 0}
       >
@@ -42,8 +42,8 @@ const ProfileSectionView: React.FC<ProfileSectionViewProps> = ({
         >
           <Typography>{cat}</Typography>
         </AccordionSummary>
-        <div className={styles.root}>
-          {users[cat as keyof typeof users].map(
+        <div className={(users[cat].length !== 0) ? styles.root : ''}>
+          {users[cat].map(
             (user) => (
               <ProfileCard
                 regdate={getStringFromDate(user.regdate)}
