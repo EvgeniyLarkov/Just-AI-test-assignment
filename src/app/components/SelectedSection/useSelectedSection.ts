@@ -10,8 +10,6 @@ import {
 } from 'app/redux/ducks/selected';
 import {
   dragDropHandler,
-  dragStartHandler,
-  dragEndHandler,
 } from '../../utils/hooks/useDrag';
 
 export interface UseSelectedSectionInterface {
@@ -29,8 +27,8 @@ export interface MemoCbRef {
 interface Handlers {
   handleRemove: MouseEventHandler<HTMLButtonElement>
   onDragOver: (ev: DragEvent<HTMLElement>) => void,
-  onDragStart: ReturnType<typeof dragStartHandler>,
-  onDragEnd: ReturnType<typeof dragEndHandler>,
+  onDragStart: () => void,
+  onDragEnd: () => void,
   onDragDrop: ReturnType<typeof dragDropHandler>,
 }
 
@@ -89,8 +87,8 @@ const UseSelectedSection = (): UseSelectedSectionInterface => {
         const handlers = {} as Handlers;
         handlers.handleRemove = handleRemove(id);
         handlers.onDragOver = onDragOver(id);
-        handlers.onDragStart = dragStartHandler(id, onDragStart);
-        handlers.onDragEnd = dragEndHandler(onDragEnd);
+        handlers.onDragStart = onDragStart;
+        handlers.onDragEnd = onDragEnd;
         handlers.onDragDrop = dragDropHandler(handleInsertBefore(id));
         memoCbRef.current[id] = handlers;
       }

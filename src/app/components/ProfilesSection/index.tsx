@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react';
-import { dragEndHandler, dragStartHandler } from 'app/utils/hooks/useDrag';
+import React from 'react';
 import ProfileSectionView from './ProfileSectionView';
 import useProfileSection from './useProfileSection';
 import { useStyles } from './styles';
@@ -11,17 +10,12 @@ const ProfilesSection: React.FC = () => {
 
   const styles = useStyles();
 
-  const handleDragStart = useCallback(dragStartHandler, []);
-  const handleDragEnd = useCallback(dragEndHandler, []);
-
   return (
     <ProfileSectionView
       users={users}
       styles={styles}
       isSearching={isSearching}
       searchValue={searchValue}
-      handleDragStart={handleDragStart}
-      handleDragEnd={handleDragEnd}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
     />

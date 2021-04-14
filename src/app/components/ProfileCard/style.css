@@ -2,6 +2,8 @@
     position: relative;
     user-select: none;
     cursor: move;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
     z-index: 10;
 }
 

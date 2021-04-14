@@ -44,6 +44,9 @@ const SelectedSectionView: React.FC<SelectedSectionViewProps> = (
           >
             <CardWithLayout
               key={user.id}
+              name={user.name}
+              surname={user.surname}
+              id={user.id}
               regdate={getStringFromDate(user.regdate)}
               email={user.email}
               avatar={user.picture}
@@ -52,11 +55,9 @@ const SelectedSectionView: React.FC<SelectedSectionViewProps> = (
               handleRemove={handlers[user.id].handleRemove}
               handleOver={handlers[user.id].onDragOver}
               handleDrop={handlers[user.id].onDragDrop}
-              handleDragStart={handlers[user.id].onDragStart}
-              handleDragEnd={handlers[user.id].onDragEnd}
-            >
-              {`${user.name} ${user.surname}`}
-            </CardWithLayout>
+              onDragStart={handlers[user.id].onDragStart}
+              onDragEnd={handlers[user.id].onDragEnd}
+            />
           </CSSTransition>
 
         ))}
